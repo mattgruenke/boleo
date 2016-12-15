@@ -1,0 +1,14 @@
+VER=$1
+if ! [ "$VER" ]
+then
+    echo "Error: no version specified" >&2
+    exit 1
+fi
+
+ROOT=$(dirname $(dirname $0))
+ln -s $ROOT boleo-$VER
+
+tar -chf boleo-$VER.tar boleo-$VER
+xz boleo-$VER.tar
+
+rm boleo-$VER
