@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ROOT=$(dirname $(dirname $0))
+
+aspell --list --extra-dicts=$ROOT/doc/aspell.en.pws < $ROOT/README.md
