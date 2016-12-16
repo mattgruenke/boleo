@@ -75,7 +75,7 @@ enum Permissions
 };
 
 
-    //! Provides necessary details of each configuration entry.
+    // Provides necessary details of each configuration entry.
 template<
     ConfigEntry e
 >
@@ -151,8 +151,8 @@ template<> void Config_set< const char *>( TangoConfig, const char *, const char
 template<> void Config_set< std::string >( TangoConfig, const char *, const std::string & );
 
 
-    //! Internal macro.
-    /*!
+    // Internal macro.
+    /*
         Used to specialize ConfigEntryTraits<> for each value of ConfigEntry.
     */
 #define BOLEOI_SPECIALIZE( p, t, e )                                    \
