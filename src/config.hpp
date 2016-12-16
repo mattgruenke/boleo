@@ -115,7 +115,7 @@ typename ConfigEntryTraits< e >::value_type Config_get(
 
     static_assert( traits_type::is_readable, "Entry must be readable" );
 
-    return Config_get< return_type >( config, traits_type::name() );
+    return Config_get< return_type >( config, traits_type::name );
 }
 
 
@@ -133,7 +133,7 @@ void Config_set(
 
     static_assert( traits_type::is_writable, "Entry must be writable" );
 
-    Config_set< value_type >( config, traits_type::name(), value );
+    Config_set< value_type >( config, traits_type::name, value );
 }
 
 template<> bool         Config_get< bool        >( TangoConfig, const char * );
@@ -163,7 +163,7 @@ template<> void Config_set< std::string >( TangoConfig, const char *, const std:
         static std::integral_constant< bool, (p) & read >  is_readable; \
         static std::integral_constant< bool, (p) & write > is_writable; \
                                                                         \
-        static const char *name() { return # e ; }                      \
+        static constexpr char name[] = # e ;                            \
     }
 
 
