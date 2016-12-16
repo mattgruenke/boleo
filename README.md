@@ -25,7 +25,7 @@ Error handling utilities:
 ## Documentation ##
 
 API documentation is provided via doxygen.  If you have it installed, build the
-'doc' target.  You'll find the results in html/.
+'doc' target.  You'll find the results in doc/html/.
 
 
 ## License ##
