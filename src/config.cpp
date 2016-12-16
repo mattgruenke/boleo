@@ -26,9 +26,6 @@ namespace boleo
 {
 
 
-static const size_t MaxStringSize = 4096;
-
-
 static void ThrowIfAccessError( TangoErrorType ev, const char *access, const char *name )
 {
     if (!ev) return;
@@ -85,7 +82,9 @@ template<> double Config_get< double >( TangoConfig config, const char *name )
 
 template<> std::string Config_get< std::string >( TangoConfig config, const char *name )
 {
-    char value[MaxStringSize + 1] = "";
+        // It's unfortunate the API provides no better option...
+    constexpr size_t MaxStringSize = 4000;
+    char value[MaxStringSize + 1] = { '\0' };
     ThrowIfGetError( TangoConfig_getString( config, name, value, MaxStringSize ), name );
     value[MaxStringSize] = '\0';
     return value;
