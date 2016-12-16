@@ -1,5 +1,38 @@
 #!/bin/bash
 
 ROOT=$(dirname $(dirname $0))
+DICT=$(cd $ROOT && pwd)/doc/aspell.en.pws
 
-aspell --list --extra-dicts=$ROOT/doc/aspell.en.pws < $ROOT/README.md
+check_markdown()
+{
+    local ERRORS=$(aspell --list --extra-dicts=$DICT < $1)
+    if [ "$ERRORS" ]
+    then 
+        echo "Errors in $1:"
+        echo "$ERRORS"
+    else
+        echo "$1 is clean"
+    fi
+    echo
+}
+
+check_doxygen()
+{
+    local ERRORS=$(cat $* | aspell -H --list --extra-dicts=$DICT)
+    if [ "$ERRORS" ]
+    then 
+        echo "Errors in doxygen:"
+        echo "$ERRORS"
+    else
+        echo "doxygen is clean"
+    fi
+    echo
+}
+
+check_markdown $ROOT/README.md
+check_markdown $ROOT/doc/conventions.md
+
+if test -d html
+then
+    check_doxygen html/*.html
+fi
