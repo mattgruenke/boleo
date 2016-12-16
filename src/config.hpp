@@ -163,7 +163,7 @@ template<> void Config_set< std::string >( TangoConfig, const char *, const std:
         static std::integral_constant< bool, (p) & read >  is_readable; \
         static std::integral_constant< bool, (p) & write > is_writable; \
                                                                         \
-        static constexpr char name[] = # e ;                            \
+        static constexpr char name[] = # e;                             \
     }
 
 
@@ -193,5 +193,5 @@ BOLEOI_SPECIALIZE( rw, int32_t,     config_runtime_depth_framerate );
 } // namespace boleo
 
 
-#endif // def BOLEO_CONFIG_HPP_
+#endif // BOLEO_CONFIG_HPP_
 
