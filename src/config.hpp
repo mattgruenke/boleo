@@ -150,7 +150,11 @@ template<> void Config_set< const char *>( TangoConfig, const char *, const char
 template<> void Config_set< std::string >( TangoConfig, const char *, const std::string & );
 
 
-#define BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( p, t, e )                \
+    //! Internal macro.
+    /*!
+        Used to specialize ConfigEntryTraits<> for each value of ConfigEntry.
+    */
+#define BOLEOI_SPECIALIZE( p, t, e )                                    \
     template<> struct ConfigEntryTraits< e >                            \
     {                                                                   \
         typedef t value_type;                                           \
@@ -163,27 +167,27 @@ template<> void Config_set< std::string >( TangoConfig, const char *, const std:
     }
 
 
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_color_mode_auto );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, int32_t,     config_color_iso );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, int32_t,     config_color_exp );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_enable_auto_recovery );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_enable_color_camera );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_enable_depth );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_enable_low_latency_imu_integration );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_enable_learning_mode );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_enable_motion_tracking );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_experimental_high_accuracy_small_scale_adf );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_high_rate_pose );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_smooth_pose );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, std::string, config_load_area_description_UUID );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_experimental_enable_dataset_recording );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, bool,        config_experimental_enable_scene_reconstruction );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( ro, std::string, tango_service_library_version );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( ro, double,      depth_period_in_seconds );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( ro, int32_t,     max_point_cloud_elements );
-BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS( rw, int32_t,     config_runtime_depth_framerate );
+BOLEOI_SPECIALIZE( rw, bool,        config_color_mode_auto );
+BOLEOI_SPECIALIZE( rw, int32_t,     config_color_iso );
+BOLEOI_SPECIALIZE( rw, int32_t,     config_color_exp );
+BOLEOI_SPECIALIZE( rw, bool,        config_enable_auto_recovery );
+BOLEOI_SPECIALIZE( rw, bool,        config_enable_color_camera );
+BOLEOI_SPECIALIZE( rw, bool,        config_enable_depth );
+BOLEOI_SPECIALIZE( rw, bool,        config_enable_low_latency_imu_integration );
+BOLEOI_SPECIALIZE( rw, bool,        config_enable_learning_mode );
+BOLEOI_SPECIALIZE( rw, bool,        config_enable_motion_tracking );
+BOLEOI_SPECIALIZE( rw, bool,        config_experimental_high_accuracy_small_scale_adf );
+BOLEOI_SPECIALIZE( rw, bool,        config_high_rate_pose );
+BOLEOI_SPECIALIZE( rw, bool,        config_smooth_pose );
+BOLEOI_SPECIALIZE( rw, std::string, config_load_area_description_UUID );
+BOLEOI_SPECIALIZE( rw, bool,        config_experimental_enable_dataset_recording );
+BOLEOI_SPECIALIZE( rw, bool,        config_experimental_enable_scene_reconstruction );
+BOLEOI_SPECIALIZE( ro, std::string, tango_service_library_version );
+BOLEOI_SPECIALIZE( ro, double,      depth_period_in_seconds );
+BOLEOI_SPECIALIZE( ro, int32_t,     max_point_cloud_elements );
+BOLEOI_SPECIALIZE( rw, int32_t,     config_runtime_depth_framerate );
 
-#undef BOLEOI_SPECIALIZE_CONFIG_ENTRY_TRAITS
+#undef BOLEOI_SPECIALIZE
 
 
 } // namespace boleo
