@@ -31,8 +31,12 @@ API documentation is provided via doxygen.  If you have it installed, build the
 docs package from the [releases](https://github.com/mattgruenke/boleo/releases)
 section of the Github page.
 
+
+### Header Files ###
+
 Details are distributed among the respective header files, with usage examples
-often appearing in the file descriptions, themselves.
+often appearing in the file descriptions, themselves.  The public header files
+are:
 
 * error_handling.hpp - exception-related utilities.
 * config.hpp - utilities for working with TangoConfig.
