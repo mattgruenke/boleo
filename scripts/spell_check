@@ -9,7 +9,7 @@ check_markdown()
     if [ "$ERRORS" ]
     then 
         echo "Errors in $1:"
-        echo "$ERRORS"
+        echo "$ERRORS" | sort -u
     else
         echo "$1 is clean"
     fi
@@ -22,7 +22,7 @@ check_doxygen()
     if [ "$ERRORS" ]
     then 
         echo "Errors in doxygen:"
-        echo "$ERRORS"
+        echo "$ERRORS" | sort -u
     else
         echo "doxygen is clean"
     fi
@@ -32,7 +32,8 @@ check_doxygen()
 check_markdown $ROOT/README.md
 check_markdown $ROOT/doc/conventions.md
 
-if test -d html
-then
-    check_doxygen html/*.html
+if   test -d     html; then check_doxygen     html/*.html
+elif test -d doc/html; then check_doxygen doc/html/*.html
+else echo "doxygen not found."; echo
 fi
+
