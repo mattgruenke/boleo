@@ -22,9 +22,11 @@
 
     @code
 
-        int depth_mode = Config_get< config_depth_mode >( config );
+        typedef std::unique_ptr< TangoConfig, void( void * ) > ScopedConfig;
+        ScopedConfig config( TangoService_getConfig( TANGO_CONFIG_RUNTIME ), &free );
 
-        Config_set< config_enable_color_camera >( config, false );
+        int depth_mode = Config_get< config_depth_mode >( config.get() );
+        Config_set< config_enable_color_camera >( config.get(), false );
 
     @endcode
 
@@ -33,7 +35,7 @@
 
     @code
 
-        Config_set< int >( config, name.c_str(), value );
+        Config_set< int >( config.get(), name.c_str(), value );
 
     @endcode    
 */
