@@ -1,6 +1,6 @@
 # ![Boleo](img/Boleo_logo.png)
 
-A library of C++ utilities for use with the C interface of Google's Project
+Boleo is a library of C++ utilities for use with the C interface of Google's Project
 Tango.  It was written with the objective of making the C interface easier and
 safer to use, especially in conjunction with useful standard library facilities
 and such 3rd party libraries as OpenCV and PCL.
@@ -28,8 +28,8 @@ Error handling utilities:
 
 API documentation is provided via doxygen.  If you have it installed, build the
 'doc' target.  You'll find the results in doc/html/.  Otherwise, download the
-docs package from the releases section of the Github page
-(<https://github.com/mattgruenke/boleo/releases>).
+docs package from the [releases](https://github.com/mattgruenke/boleo/releases)
+section of the Github page.
 
 Details are distributed among the respective header files, with usage examples
 often appearing in the file descriptions, themselves.
