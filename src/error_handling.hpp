@@ -10,6 +10,7 @@
 //
 //! Provides exception-handling support for TangoErrors.
 /*! @file
+
     TangoException is provided as the primary exception for Tango API errors.
     It's built atop std::system_error, as a way to provide string translations
     for error values and to enable recovery of the original return code.

@@ -10,6 +10,7 @@
 //
 //! Provides exception-handling support for TangoErrors.
 /*! @file
+
     See error_handling.hpp for details.
 */
 ////////////////////////////////////////////////////////////////////////////////
