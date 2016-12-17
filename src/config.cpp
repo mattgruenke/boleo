@@ -48,6 +48,18 @@ static void ThrowIfSetError( TangoErrorType ev, const char *name )
 }
 
 
+std::string Config_toString( TangoConfig config )
+{
+    char *str = TangoConfig_toString( config );
+    if (!str) throw std::runtime_error( "Config_toString() failed" );
+
+    std::string result( str );
+    free( str );
+
+    return result;
+}
+
+
 template<> bool Config_get< bool >( TangoConfig config, const char *name )
 {
     bool value = false;

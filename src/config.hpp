@@ -10,7 +10,32 @@
 //
 //! Wrapper for TangoConfig.
 /*! @file
-    Adds compile-time type safety and exception-based error handling.
+
+    This file provides two sets of TangoConfig accessor functions.  One of
+    which enables compile-time type safety, while both provide exception-based
+    error handling.
+
+    When the config entry is known at compile time, prefer the single-parameter
+    and two-parameter forms of Config_get() and Config_set(), respectively.
+    The template parameter indicates both the entry to access, and the type of
+    the return value.
+
+    @code
+
+        int depth_mode = Config_get< config_depth_mode >( config );
+
+        Config_set< config_enable_color_camera >( config, false );
+
+    @endcode
+
+    When the config entry accessed is known only at runtime, then the form used
+    accepts the value type as the template parameter.
+
+    @code
+
+        Config_set< int >( config, name.c_str(), value );
+
+    @endcode    
 */
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -82,7 +107,22 @@ template<
 struct ConfigEntryTraits;
 
 
+    //! Wraps TangoConfig_toString().
+    /*!
+        @throws std::runtime_error in case of failure.
+
+        This can't throw TangoError, since TangoConfig_toString() return no
+        error code.
+    */
+std::string Config_toString(
+    TangoConfig config  //!< The config object to read.
+);
+
+
     //! Reads the value of a configuration entry, given the type.
+    /*!
+        @throws TangoError in case of errors.
+    */
 template<
     typename T
 >
@@ -93,6 +133,9 @@ T Config_get(
 
 
     //! Writes the value of a configuration entry of given type.
+    /*!
+        @throws TangoError in case of errors.
+    */
 template<
     typename T
 >
@@ -104,6 +147,9 @@ void Config_set(
 
 
     //! Reads the value of a configuration entry, specified at compile time.
+    /*!
+        @throws TangoError in case of errors.
+    */
 template<
     ConfigEntry e
 >
@@ -121,6 +167,9 @@ typename ConfigEntryTraits< e >::value_type Config_get(
 
 
     //! Writes the value of a configuration entry, specified at compile time.
+    /*!
+        @throws TangoError in case of errors.
+    */
 template<
     ConfigEntry e
 >
