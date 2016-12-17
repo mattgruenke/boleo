@@ -1,7 +1,9 @@
 # ![Boleo](img/Boleo_logo.png)
 
 A library of C++ utilities for use with the C interface of Google's Project
-Tango.
+Tango.  It was written with the objective of making the C interface easier and
+safer to use, especially in conjunction with useful standard library facilities
+and such 3rd party libraries as OpenCV and PCL.
 
 
 ## Features ##
@@ -25,7 +27,15 @@ Error handling utilities:
 ## Documentation ##
 
 API documentation is provided via doxygen.  If you have it installed, build the
-'doc' target.  You'll find the results in doc/html/.
+'doc' target.  You'll find the results in doc/html/.  Otherwise, download the
+docs package from the releases section of the Github page
+(<https://github.com/mattgruenke/boleo/releases>).
+
+Details are distributed among the respective header files, with usage exmaples
+often appearing in the file descriptions, themselves.
+
+* error_handling.hpp - exception-related utilities.
+* config.hpp - utilities for working with TangoConfig.
 
 
 ## License ##
