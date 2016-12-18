@@ -28,11 +28,6 @@ void ThrowError( TangoErrorType ev, const char *what )
 }
 
 
-void ThrowIfError( TangoErrorType ev, const char *what )
-{
-    if (ev) ThrowError( ev, what );
-}
-
 
 // class TangoException:
 TangoException::TangoException( TangoErrorType ev, const char *what )

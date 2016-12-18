@@ -61,10 +61,13 @@ void ThrowError(
 
 
     //! Conditionally throws a TangoException.
-void ThrowIfError(
+inline void ThrowIfError(
     TangoErrorType ev,  //!< What error was encountered.
     const char *what    //!< Circumstances of the error.
-);
+)
+{
+    if (ev) ThrowError( ev, what );
+}
 
 
     //! A distinct type for Tango Errors, in case callers want
