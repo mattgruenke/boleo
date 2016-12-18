@@ -20,6 +20,10 @@ Error handling utilities:
   propagation of API errors via exceptions.
 * TangoErrorCategory facilitates error message lookup, within the context of
   exception handling.
+* ThrowError() and ThrowIfError() wrap TangoErrorType error codes in
+  TangoExceptions and throw.
+* BOLEO_THROW_IF_ERROR() wraps ThrowIfError(), using the parameter as the error
+  description (similar to assert()).
 * SafeCall() trampoline functions provide convenient last-resort exception
   handling.
 
