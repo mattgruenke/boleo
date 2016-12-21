@@ -39,7 +39,7 @@ typedef decltype (TangoPointCloud::points[0]) PointType;
 
 
     //! A converter from TangoPoint to pcl::InterestPoint.
-pcl::InterestPoint ToInterestPoint(
+inline pcl::InterestPoint ToInterestPoint(
     const PointType &point
 )
 {
@@ -50,16 +50,16 @@ pcl::InterestPoint ToInterestPoint(
     result.strength = point[3];
     return result;
 }
-    
+
 
     //! Creates a pcl::PointCloud< T > from a TangoPointCloud.
 template<
     typename point_type,    //!< Type of point cloud to create.
-    typename converter_type //!< Point transfer function.
+    typename converter_type //!< Type of point transfer function.
 >
 pcl::PointCloud< point_type > PointCloud_toPcl(
-    const TangoPointCloud *cloud,
-    const converter_type &converter
+    const TangoPointCloud *cloud,   //!< Input cloud.
+    const converter_type &converter //!< Point transfer function instance.
 )
 {
     pcl::PointCloud< point_type > result;
@@ -68,20 +68,39 @@ pcl::PointCloud< point_type > PointCloud_toPcl(
     for (uint32_t i = 0; i != cloud->num_points; ++i)
     {
         const PointType & BOLEO_RESTRICT tango_point = cloud->points[i];
-
-#if 1   // TO_DO: ensure this is no less efficient than a hard-coded implementation.
         result[i] = converter( tango_point );
-#else
-        pcl::InterestPoint interest_point =
-            {
-                .x        = tango_point[0],
-                .y        = tango_point[1],
-                .z        = tango_point[2],
-                .strength = tango_point[3]
-            };
+    }
 
-        result[i] = interest_point;
-#endif
+    return result;
+}
+
+
+    //! Since g++ -O3 doesn't seem to inline ToInterestPoint(), here's a
+    //!  hard-coded specialization of PointCloud_toPcl< pcl::InterestPoint >().
+template<> pcl::PointCloud< pcl::InterestPoint >
+    PointCloud_toPcl<
+        pcl::InterestPoint,
+        pcl::InterestPoint(*)( const PointType & )
+    >(
+        const TangoPointCloud *cloud,
+        pcl::InterestPoint(* const &converter)( const PointType & )
+    )
+{
+    pcl::PointCloud< pcl::InterestPoint > result;
+    result.resize( cloud->num_points );
+
+    if (converter == ToInterestPoint)
+    {
+        for (uint32_t i = 0; i != cloud->num_points; ++i)
+        {
+            const PointType & BOLEO_RESTRICT tango_point = cloud->points[i];
+            result[i] = ToInterestPoint( tango_point );
+        }
+    }
+    else for (uint32_t i = 0; i != cloud->num_points; ++i)
+    {
+        const PointType & BOLEO_RESTRICT tango_point = cloud->points[i];
+        result[i] = converter( tango_point );
     }
 
     return result;
