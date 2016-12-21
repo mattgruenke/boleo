@@ -14,12 +14,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#ifndef BOLEO_CONFIG_HPP_
-#define BOLEO_CONFIG_HPP_
+#ifndef BOLEO_COMMON_HPP_
+#define BOLEO_COMMON_HPP_
 
 
 #define BOLEO_RESTRICT __restrict__
 
 
-#endif // BOLEO_CONFIG_HPP_
+#endif // BOLEO_COMMON_HPP_
 
