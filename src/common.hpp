@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright Matthew A. Gruenke 2016.
+//
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at
+//   http://www.boost.org/LICENSE_1_0.txt)
+//
+////////////////////////////////////////////////////////////////////////////////
+//
+//! Common types & definitions.
+/*! @file
+*/
+////////////////////////////////////////////////////////////////////////////////
+
+
+#ifndef BOLEO_CONFIG_HPP_
+#define BOLEO_CONFIG_HPP_
+
+
+#define BOLEO_RESTRICT __restrict__
+
+
+#endif // BOLEO_CONFIG_HPP_
+
