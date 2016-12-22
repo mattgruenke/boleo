@@ -38,22 +38,6 @@ namespace boleo
 typedef decltype (TangoPointCloud::points[0]) PointType;
 
 
-    //! Internals.
-namespace detail
-{
-        //! Copies points from a TangoPointCloud to a pcl::PointCloud< T >.
-    template<
-        typename point_type,    //!< Type of point cloud to create.
-        typename converter_type //!< Type of point transfer function.
-    >
-    void CopyPoints(
-        pcl::PointCloud< point_type > &dest,//!< Output cloud.
-        const TangoPointCloud *src,         //!< Input cloud.
-        const converter_type &converter     //!< Point transfer function inst.
-    );
-}
-
-
     //! A converter from TangoPoint to pcl::InterestPoint.
 struct InterestPointConverter
 {
@@ -81,50 +65,15 @@ pcl::PointCloud< point_type > PointCloud_toPcl(
 {
     pcl::PointCloud< point_type > result;
     result.resize( cloud->num_points );
-    detail::CopyPoints( result, cloud, converter );
+
+    for (uint32_t i = 0; i != cloud->num_points; ++i)
+    {
+        const PointType & BOLEO_RESTRICT tango_point = cloud->points[i];
+        result[i] = converter( tango_point );
+    }
+
     return result;
 }
-
-
-namespace detail
-{
-
-
-    // Generic implementation.
-template< typename point_type, typename converter_type >
-    void CopyPoints(
-        pcl::PointCloud< point_type > &dest,
-        const TangoPointCloud *src,
-        const converter_type &converter )
-{
-    for (uint32_t i = 0; i != src->num_points; ++i)
-    {
-        const PointType & BOLEO_RESTRICT tango_point = src->points[i];
-        dest[i] = converter( tango_point );
-    }
-}
-
-
-    // Since g++ -O3 doesn't seem to inline ToInterestPoint(), here's a
-    //  hard-coded specialization of PointCloud_toPcl< pcl::InterestPoint >().
-template<>
-    void CopyPoints<
-        pcl::InterestPoint,
-        InterestPointConverter
-    >(
-        pcl::PointCloud< pcl::InterestPoint > &dest,
-        const TangoPointCloud *src,
-        const InterestPointConverter &converter )
-{
-    for (uint32_t i = 0; i != src->num_points; ++i)
-    {
-        const PointType & BOLEO_RESTRICT tango_point = src->points[i];
-        dest[i] = converter( tango_point );
-    }
-}
-
-
-} // namespace detail
 
 
 } // namespace boleo
