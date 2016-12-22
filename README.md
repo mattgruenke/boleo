@@ -1,9 +1,9 @@
 # ![Boleo](img/Boleo_logo.png)
 
-Boleo is a library of C++ utilities for use with the C interface of Google's Project
-Tango.  It was written with the objective of making the C interface easier and
-safer to use, especially in conjunction with useful standard library facilities
-and such 3rd party libraries as OpenCV and PCL.
+Boleo is an *unofficial* C++ utility library, for use with the C interface of
+Google's Project Tango.  It was written with the objective of making the C
+interface easier and safer to use, especially in conjunction with useful C++
+standard library facilities and select 3rd party libraries (OpenCV and PCL).
 
 
 ## Features ##
@@ -28,6 +28,11 @@ Error handling utilities:
   handling.
 
 
+Point Cloud Library interoperability:
+
+* Conversion from TangoPointCloud to pcl::PointCloud< T >.
+
+
 ## Documentation ##
 
 API documentation is provided via doxygen.  If you have it installed, build the
@@ -44,6 +49,7 @@ are:
 
 * error_handling.hpp - exception-related utilities.
 * config.hpp - utilities for working with TangoConfig.
+* pcl.hpp - interoperability with Point Cloud Library.
 
 
 ## License ##
