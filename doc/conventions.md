@@ -104,13 +104,15 @@ My C++ style is something of a hybrid between the boost and Google conventions.
 
 ### Horizontal Whitespace ###
 
-* In function parameter lists '('s should be followed by a space, since they're
-  semantically different from expressions.
-* Everywhere else they're required by the language, '(' should be preceded by a
-  space.
-* In expressions, '(' should have no space, on either side.
-* Template parameter lists should have a space after/before '<' and '>',
-  respectively.  Sometimes necessary for C++98, it's now just a habit.
+* ()'s mean different things, in different contexts.  These semantic differences
+  should be highlighted, via different whitespace conventions.
+    - In function parameter & argument lists, add a pair of spaces immediately
+      to the inside of '(' and ')', except when they're otherwise empty.
+    - In expressions, add no whitespace on either side of '(' and ')'.
+    - Everywhere else they're required by the language, a space should be added
+      on the outside of '(' and ')'.
+* Template argument lists should have a pair of spaces on the inside of '<' and
+  '>', like functions.  Sometimes necessary for C++98, it's now just a habit.
 * for brace initialization involving the type, put a space in between to help
   distinguish it from ()'s.  For example:
 
