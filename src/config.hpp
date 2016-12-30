@@ -209,7 +209,7 @@ namespace detail
 {
 
 
-    //! Used internally, to enable compile-time checks.
+    // Used internally, to enable compile-time checks.
 enum Permissions
 {
     inaccessible = 0,
