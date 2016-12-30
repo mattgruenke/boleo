@@ -8,7 +8,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-//! Wrapper for TangoConfig.
+//! Provides type-safe wrappers for accessing entries in TangoConfig objects.
 /*! @file
 
     This file provides two sets of TangoConfig accessor functions.  One of
@@ -91,24 +91,14 @@ enum ConfigEntry
 };
 
 
-    //! Used internally, to enable compile-time checks.
-enum Permissions
+    //! Internal details.
+namespace detail
 {
-    inaccessible = 0,
-    read = 1,
-    write = 2,
 
-    ro = read,
-    wo = write,
-    rw = read | write
-};
+        // Provides necessary details of each configuration entry.
+    template< ConfigEntry e > struct ConfigEntryTraits;
 
-
-    // Provides necessary details of each configuration entry.
-template<
-    ConfigEntry e
->
-struct ConfigEntryTraits;
+}
 
 
     //! Wraps TangoConfig_toString().
@@ -157,11 +147,11 @@ void Config_set(
 template<
     ConfigEntry e
 >
-typename ConfigEntryTraits< e >::value_type Config_get(
+typename detail::ConfigEntryTraits< e >::value_type Config_get(
     TangoConfig config  //!< The config object to read.
 )
 {
-    typedef ConfigEntryTraits< e > traits_type;
+    typedef detail::ConfigEntryTraits< e > traits_type;
     typedef typename traits_type::value_type return_type;
 
     static_assert( traits_type::is_readable, "Entry must be readable" );
@@ -179,16 +169,22 @@ template<
 >
 void Config_set(
     TangoConfig config, //!< The config object to write.
-    const typename ConfigEntryTraits< e >::value_type &value //!< Value to write.
+    const typename detail::ConfigEntryTraits< e >::value_type &value //!< Value.
 )
 {
-    typedef ConfigEntryTraits< e > traits_type;
+    typedef detail::ConfigEntryTraits< e > traits_type;
     typedef typename traits_type::value_type value_type;
 
     static_assert( traits_type::is_writable, "Entry must be writable" );
 
     Config_set< value_type >( config, traits_type::name, value );
 }
+
+
+
+////////////////////////////////////////////////////////////
+// Specializations
+////////////////////////////////////////////////////////////
 
 template<> bool         Config_get< bool        >( TangoConfig, const char * );
 template<> int32_t      Config_get< int32_t     >( TangoConfig, const char * );
@@ -202,6 +198,28 @@ template<> void Config_set< int64_t     >( TangoConfig, const char *, const int6
 template<> void Config_set< double      >( TangoConfig, const char *, const double & );
 template<> void Config_set< const char *>( TangoConfig, const char *, const char * const & );
 template<> void Config_set< std::string >( TangoConfig, const char *, const std::string & );
+
+
+
+////////////////////////////////////////////////////////////
+// Internal Details
+////////////////////////////////////////////////////////////
+
+namespace detail
+{
+
+
+    //! Used internally, to enable compile-time checks.
+enum Permissions
+{
+    inaccessible = 0,
+    read = 1,
+    write = 2,
+
+    ro = read,
+    wo = write,
+    rw = read | write
+};
 
 
     // Internal macro.
@@ -219,7 +237,6 @@ template<> void Config_set< std::string >( TangoConfig, const char *, const std:
                                                                         \
         static constexpr char name[] = # e;                             \
     }
-
 
 BOLEOI_SPECIALIZE( rw, bool,        config_color_mode_auto );
 BOLEOI_SPECIALIZE( rw, int32_t,     config_color_iso );
@@ -243,6 +260,9 @@ BOLEOI_SPECIALIZE( ro, int32_t,     max_point_cloud_elements );
 BOLEOI_SPECIALIZE( rw, int32_t,     config_runtime_depth_framerate );
 
 #undef BOLEOI_SPECIALIZE
+
+
+} // namespace detail
 
 
 } // namespace boleo
