@@ -1,16 +1,53 @@
 #!/bin/bash
 
+    # echo each command and exit upon any failures.
+set -ex
+
+
+## Arguments ##
+
 VER=$1
 if ! [ "$VER" ]
 then
     echo "Error: no version specified" >&2
     exit 1
 fi
+shift
+
+TANGO_SDK_DIR=$1
+if ! [ "$TANGO_SDK_DIR" ]
+then
+    echo "Error: Tango SDK dir not specified" >&2
+    exit 1
+fi
+shift
+
+
+## Setup ##
 
 ROOT=$(dirname $(dirname $0))
-ln -s $ROOT boleo-$VER
 
-tar -chf boleo-$VER.tar boleo-$VER
-xz boleo-$VER.tar
 
-rm boleo-$VER
+## Main release ##
+
+ln -s $ROOT boleo-${VER}
+tar -chf boleo-${VER}.tar --exclude=.git boleo-${VER}
+xz boleo-${VER}.tar
+rm boleo-${VER}
+
+
+## Docs ##
+
+xz -dc boleo-${VER}.tar.xz | tar -xf -
+(
+    cd boleo-${VER}
+    cmake -DCMAKE_FIND_ROOT_PATH=$TANGO_SDK_DIR $*
+    make doc
+)
+tar -chf boleo-${VER}-doc.tar boleo-${VER}/doc/html
+xz boleo-${VER}-doc.tar
+
+
+## Cleanup ##
+
+rm -rf boleo-${VER}
