@@ -33,6 +33,7 @@ ROOT=$(dirname $(dirname $0))
 ln -s $ROOT boleo-${VER}
 tar -chf boleo-${VER}.tar --exclude=.git boleo-${VER}
 xz boleo-${VER}.tar
+md5sum boleo-${VER}.tar.xz > boleo-${VER}.tar.xz.md5
 rm boleo-${VER}
 
 
@@ -46,6 +47,7 @@ xz -dc boleo-${VER}.tar.xz | tar -xf -
 )
 tar -chf boleo-${VER}-doc.tar boleo-${VER}/doc/html
 xz boleo-${VER}-doc.tar
+md5sum boleo-${VER}-doc.tar.xz > boleo-${VER}-doc.tar.xz.md5
 
 
 ## Cleanup ##
