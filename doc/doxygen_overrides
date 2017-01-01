@@ -1,0 +1,59 @@
+# This is a summary of most of the doxygen defaults I changed.  Had I committed
+#  the default file, before changing it, this could've been generated via git diff.
+
+135c135
+< FULL_PATH_NAMES        = YES
+---
+> FULL_PATH_NAMES        = NO
+147c147
+< STRIP_FROM_PATH        =
+---
+> STRIP_FROM_PATH        = "@CMAKE_CURRENT_SOURCE_DIR@"/..
+192c192
+< MULTILINE_CPP_IS_BRIEF = NO
+---
+> MULTILINE_CPP_IS_BRIEF = YES
+401c401
+< EXTRACT_ALL            = YES
+---
+> EXTRACT_ALL            = NO
+407c407
+< EXTRACT_PRIVATE        = YES
+---
+> EXTRACT_PRIVATE        = NO
+452c452
+< HIDE_UNDOC_MEMBERS     = NO
+---
+> HIDE_UNDOC_MEMBERS     = YES
+460c460
+< HIDE_UNDOC_CLASSES     = NO
+---
+> HIDE_UNDOC_CLASSES     = YES
+481c481
+< INTERNAL_DOCS          = YES
+---
+> INTERNAL_DOCS          = NO
+702c702
+< WARN_IF_UNDOCUMENTED   = YES
+---
+> WARN_IF_UNDOCUMENTED   = NO
+746c746
+< INPUT                  = "@CMAKE_CURRENT_SOURCE_DIR@/../src"
+---
+> INPUT = "@CMAKE_CURRENT_SOURCE_DIR@/../README.md" "@CMAKE_CURRENT_SOURCE_DIR@/../src"
+882c882
+< USE_MDFILE_AS_MAINPAGE =
+---
+> USE_MDFILE_AS_MAINPAGE = "README.md"
+908c908
+< STRIP_CODE_COMMENTS    = YES
+---
+> STRIP_CODE_COMMENTS    = NO
+1365c1365
+< ENUM_VALUES_PER_LINE   = 4
+---
+> ENUM_VALUES_PER_LINE   = 1
+2031c2031
+< HIDE_UNDOC_RELATIONS   = YES
+---
+> HIDE_UNDOC_RELATIONS   = NO
