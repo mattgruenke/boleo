@@ -47,7 +47,8 @@ Details are distributed among the respective header files, with usage examples
 often appearing in the file descriptions, themselves.  The public header files
 are:
 
-* error_handling.hpp - exception-related utilities.
+* exceptions.hpp - exception class & utilities for TangoErrors.
+* safe_call.hpp - exception-handling support for JNI methods.
 * config.hpp - utilities for working with TangoConfig.
 * pcl.hpp - interoperability with Point Cloud Library.
 
