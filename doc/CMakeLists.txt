@@ -16,7 +16,7 @@ if( DOXYGEN_FOUND )
 
     install(
         DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
-        DESTINATION share/doc
+        DESTINATION share/doc/boleo
         OPTIONAL )
 
 else()
@@ -24,3 +24,9 @@ else()
     message( WARNING "Doxygen not found: no doc target created." )
 
 endif()
+
+
+install(
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/../README.md
+    DESTINATION share/doc/boleo )
+

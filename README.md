@@ -36,9 +36,12 @@ Point Cloud Library interoperability:
 ## Documentation ##
 
 API documentation is provided via doxygen.  If you have it installed, build the
-'doc' target.  You'll find the results in doc/html/.  Otherwise, download the
-docs package from the [releases](https://github.com/mattgruenke/boleo/releases)
-section of the Github page.
+'doc' target.  You'll find the results in doc/html/ of the build area.  During
+installation, these are copied to ${CMAKE_INSTALL_PREFIX}/share/doc/boleo/html/.
+
+Otherwise, you can download the docs package from the
+[releases](https://github.com/mattgruenke/boleo/releases) section of the Github
+page.
 
 
 ### Header Files ###
