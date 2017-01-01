@@ -4,6 +4,13 @@ project( Boleo
     VERSION 0.0.0 )
 
 
+## Options ##
+
+option( LinkWithExternalLibs
+    "Internal option to facilitate compilation testing on platforms not supported by TangoSDK."
+    TRUE )
+
+
 ## External Dependencies ##
 
 set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/" ${CMAKE_MODULE_PATH} )
