@@ -16,9 +16,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "error_handling.hpp"
+#include "boleo/error_handling.hpp"
 
 
+    //! Namespace for Boleo.
 namespace boleo {
 
 

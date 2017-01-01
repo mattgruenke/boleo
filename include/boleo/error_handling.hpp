@@ -33,7 +33,10 @@
 #include <type_traits>
 #include <system_error>
 
-#include "tango_client_api.h"
+extern "C"
+{
+#   include "tango_client_api.h"
+}
 
 
     //! Inspired by assert(), this uses the contained expression

@@ -16,8 +16,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "config.hpp"
-#include "error_handling.hpp"
+#include "boleo/config.hpp"
+#include "boleo/error_handling.hpp"
 
 #include <sstream>
 

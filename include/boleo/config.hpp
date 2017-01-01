@@ -50,7 +50,9 @@
 
 #include <string>
 
-#include "tango_client_api.h"
+extern "C" {
+#   include "tango_client_api.h"
+}
 
 
     //! Namespace for Boleo.
