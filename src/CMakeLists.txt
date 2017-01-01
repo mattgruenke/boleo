@@ -12,8 +12,8 @@ set( h_dir ${incl}/boleo )
 
 ## What to build ##
 
-set( sources config.cpp error_handling.cpp )
-set( headers ${h_dir}/config.hpp ${h_dir}/error_handling.hpp ${h_dir}/pcl.hpp ${h_dir}/common.hpp )
+set( sources config.cpp exceptions.cpp )
+set( headers ${h_dir}/config.hpp ${h_dir}/exceptions.hpp ${h_dir}/safe_call.hpp ${h_dir}/pcl.hpp ${h_dir}/common.hpp )
 add_library( boleo ${sources} )
 target_link_libraries( boleo ${TANGO_SDK_LIBRARY} )
 

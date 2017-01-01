@@ -17,7 +17,7 @@
 
 
 #include "boleo/config.hpp"
-#include "boleo/error_handling.hpp"
+#include "boleo/exceptions.hpp"
 
 #include <sstream>
 

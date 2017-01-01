@@ -11,12 +11,12 @@
 //! Provides exception-handling support for TangoErrors.
 /*! @file
 
-    See error_handling.hpp for details.
+    See exceptions.hpp for details.
 */
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "boleo/error_handling.hpp"
+#include "boleo/exceptions.hpp"
 
 
     //! Namespace for Boleo.
