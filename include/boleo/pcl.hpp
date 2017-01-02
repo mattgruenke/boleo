@@ -18,7 +18,7 @@
 #define BOLEO_PCL_HPP_
 
 
-#include "boleo/common.hpp"
+#include "boleo/detail/common.hpp"
 
 extern "C"
 {

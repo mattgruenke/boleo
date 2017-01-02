@@ -19,10 +19,13 @@ set( sources
 
 set( headers
     ${h_dir}/config.hpp
-    ${h_dir}/common.hpp
     ${h_dir}/exceptions.hpp
     ${h_dir}/pcl.hpp
     ${h_dir}/safe_call.hpp
+)
+
+set( details
+    ${h_dir}/detail/common.hpp
 )
 
 add_library( boleo ${sources} )
@@ -58,4 +61,8 @@ install(
 install(
     FILES ${headers}
     DESTINATION include/boleo )
+
+install(
+    FILES ${details}
+    DESTINATION include/boleo/detail )
 
