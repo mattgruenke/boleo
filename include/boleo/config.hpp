@@ -224,20 +224,32 @@ enum Permissions
 };
 
 
+inline constexpr bool IsReadable( Permissions p )
+{
+    return (p & read) != 0;
+}
+
+
+inline constexpr bool IsWritable( Permissions p )
+{
+    return (p & write) != 0;
+}
+
+
     // Internal macro.
     /*
         Used to specialize ConfigEntryTraits<> for each value of ConfigEntry.
     */
-#define BOLEOI_SPECIALIZE( p, t, e )                                    \
-    template<> struct ConfigEntryTraits< e >                            \
-    {                                                                   \
-        typedef t value_type;                                           \
-                                                                        \
-        static std::integral_constant< Permissions, (p) >  permissions; \
-        static std::integral_constant< bool, (p) & read >  is_readable; \
-        static std::integral_constant< bool, (p) & write > is_writable; \
-                                                                        \
-        static constexpr char name[] = # e;                             \
+#define BOLEOI_SPECIALIZE( p, t, e )                                        \
+    template<> struct ConfigEntryTraits< e >                                \
+    {                                                                       \
+        typedef t value_type;                                               \
+                                                                            \
+        static std::integral_constant< Permissions, (p) >       permissions;\
+        static std::integral_constant< bool, IsReadable( p ) >  is_readable;\
+        static std::integral_constant< bool, IsWritable( p ) >  is_writable;\
+                                                                            \
+        static constexpr char name[] = # e;                                 \
     }
 
 BOLEOI_SPECIALIZE( rw, bool,        config_color_mode_auto );
