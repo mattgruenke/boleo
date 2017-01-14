@@ -27,6 +27,34 @@ namespace boleo
 {
 
 
+namespace detail
+{
+
+    // The name strings need to be instantiated.
+    constexpr char ConfigEntryTraits< config_color_mode_auto >::name[];
+    constexpr char ConfigEntryTraits< config_color_iso >::name[];
+    constexpr char ConfigEntryTraits< config_color_exp >::name[];
+    constexpr char ConfigEntryTraits< config_depth_mode >::name[];
+    constexpr char ConfigEntryTraits< config_enable_auto_recovery >::name[];
+    constexpr char ConfigEntryTraits< config_enable_color_camera >::name[];
+    constexpr char ConfigEntryTraits< config_enable_depth >::name[];
+    constexpr char ConfigEntryTraits< config_enable_low_latency_imu_integration >::name[];
+    constexpr char ConfigEntryTraits< config_enable_learning_mode >::name[];
+    constexpr char ConfigEntryTraits< config_enable_motion_tracking >::name[];
+    constexpr char ConfigEntryTraits< config_high_rate_pose >::name[];
+    constexpr char ConfigEntryTraits< config_smooth_pose >::name[];
+    constexpr char ConfigEntryTraits< config_load_area_description_UUID >::name[];
+    constexpr char ConfigEntryTraits< config_enable_dataset_recording >::name[];
+    constexpr char ConfigEntryTraits< config_enable_drift_correction >::name[];
+    constexpr char ConfigEntryTraits< config_experimental_enable_scene_reconstruction >::name[];
+    constexpr char ConfigEntryTraits< tango_service_library_version >::name[];
+    constexpr char ConfigEntryTraits< depth_period_in_seconds >::name[];
+    constexpr char ConfigEntryTraits< max_point_cloud_elements >::name[];
+    constexpr char ConfigEntryTraits< config_runtime_depth_framerate >::name[];
+
+}
+
+
 static void ThrowIfAccessError( TangoErrorType ev, const char *access, const char *name )
 {
     if (!ev) return;
