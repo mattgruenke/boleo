@@ -22,10 +22,8 @@
 
     @code
 
-        typedef std::unique_ptr< *TangoConfig, void( TangoConfig ) > ScopedCfg;
-        ScopedCfg config(
-            TangoService_getConfig( TANGO_CONFIG_RUNTIME ),
-            &TangoConfig_free );
+        UniqueCfg config =
+            WrapConfig( TangoService_getConfig( TANGO_CONFIG_RUNTIME ) );
 
         int depth_mode = Config_get< config_depth_mode >( config.get() );
         Config_set< config_enable_color_camera >( config.get(), false );
