@@ -224,12 +224,14 @@ enum Permissions
 };
 
 
+    // Primarily to avoid a narrowing warning, in std::integral_constant<>.
 constexpr bool IsReadable( Permissions p )
 {
     return (p & read) != 0;
 }
 
 
+    // Primarily to avoid a narrowing warning, in std::integral_constant<>.
 constexpr bool IsWritable( Permissions p )
 {
     return (p & write) != 0;
