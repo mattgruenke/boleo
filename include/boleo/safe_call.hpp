@@ -28,7 +28,8 @@
 
 #include "boleo/exceptions.hpp"
 
-#include <type_traits>
+#include <string>
+#include <typeinfo>
 
 
 
@@ -54,10 +55,10 @@ template<
     typename... ParamTypes  //!< Types of the various function parameters.
 >
 jint SafeCall(
-    void log_fn( const char * ),    //!< Function for logging errors.
-    ClassType &c,           //!< Object instance on which to call member fn.
+    void log_fn( const char * ),//!< Function for logging errors.
+    ClassType &c,               //!< Object instance on which to call member fn.
     jint (ClassType::*f)( ParamTypes... ),  //!< Member function.
-    ParamTypes... params    //!< Member function params.
+    ParamTypes... params        //!< Member function params.
 )
 {
     try
@@ -66,16 +67,31 @@ jint SafeCall(
     }
     catch (TangoException &e)
     {
-        log_fn( e.what() );
-        return e.code().value();
+        std::string message = "Unhandled Tango exception: ";
+        std::error_code &ec = e.code();
+        int ev = e.code().value();
+        std::string tango_msg = ec.category().message( ev );
+        if (tango_msg != e.what())
+        {
+            message += e.what();
+            message += " failed because ";
+        }
+        message += tango_msg;
+        log_fn( message.c_str() );
+        return ev;
     }
     catch (std::exception &e)
     {
-        log_fn( e.what() );     // TO_DO: get more info, here
+        std::string message = "Unhandled exception: ";
+        message += e.what();
+        message += " (";
+        message += typeid( e ).name();
+        message += ")";
+        log_fn( message.c_str() );
     }
     catch (...)
     {
-        log_fn( "Unknown exception" );
+        log_fn( "Unhandled exception of non-standard type." );
     }
 
     return TANGO_ERROR;
