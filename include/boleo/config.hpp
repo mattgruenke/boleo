@@ -49,6 +49,8 @@
 
 
 #include <string>
+#include <memory>
+#include <type_traits>
 
 extern "C" {
 #   include "tango_client_api.h"
@@ -58,6 +60,38 @@ extern "C" {
     //! Namespace for Boleo.
 namespace boleo
 {
+
+
+    //! Wraps TangoConfig in a std::unique_ptr<>.
+    /*!
+        Use with NullConfig() and WrapConfig(), or as follows:
+        @code
+
+            UniqueConfig cfg(
+                TangoService_getConfig( TANGO_CONFIG_DEFAULT ),
+                &TangoConfig_free );
+
+                // Even if setting to nullptr, use TangoConfig_free().
+            cfg = UniqueConfig( nullptr, &TangoConfig_free );
+
+                // ...because, when resetting, only TangoConfig is replaced.
+            cfg.reset( TangoService_getConfig( TANGO_CONFIG_DEFAULT ) );
+
+        @endcode
+    */
+typedef std::unique_ptr<
+    std::remove_pointer< TangoConfig >::type, 
+    void (*)( TangoConfig ) > UniqueConfig;
+
+
+    //! Returns a NULL UniqueConfig instance.
+UniqueConfig NullConfig();
+
+
+    //! Wraps a TangoConfig instance in UniqueConfig.
+UniqueConfig WrapConfig(
+    TangoConfig cfg
+);
 
 
     //! See tango_client_api.h, for the current list.

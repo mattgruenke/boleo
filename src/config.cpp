@@ -27,6 +27,18 @@ namespace boleo
 {
 
 
+UniqueConfig NullConfig()
+{
+    return UniqueConfig( nullptr, &TangoConfig_free );
+}
+
+
+UniqueConfig WrapConfig( TangoConfig cfg )
+{
+    return UniqueConfig( cfg, &TangoConfig_free );
+}
+
+
 namespace detail
 {
 
