@@ -139,7 +139,7 @@ namespace detail
     /*!
         @throws std::runtime_error in case of failure.
 
-        This can't throw TangoError, since TangoConfig_toString() return no
+        This can't throw TangoError, since TangoConfig_toString() returns no
         error code.
     */
 std::string Config_toString(
