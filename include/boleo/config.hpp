@@ -22,7 +22,7 @@
 
     @code
 
-        UniqueCfg config =
+        UniqueConfig config =
             WrapConfig( TangoService_getConfig( TANGO_CONFIG_RUNTIME ) );
 
         int depth_mode = Config_get< config_depth_mode >( config.get() );
@@ -90,6 +90,16 @@ UniqueConfig NullConfig();
 UniqueConfig WrapConfig(
     TangoConfig cfg
 );
+
+
+    //! Raw pointer accessor function, supporting Config function templates.
+TangoConfig GetConfig(
+    UniqueConfig &cfg   //!< Instance to access.
+);
+
+
+    // Overload for TangoConfig.
+constexpr TangoConfig GetConfig( TangoConfig );
 
 
     //! See tango_client_api.h, for the current list.
@@ -238,6 +248,18 @@ template<> void Config_set< std::string >( TangoConfig, const char *, const std:
 ////////////////////////////////////////////////////////////
 // Internal Details
 ////////////////////////////////////////////////////////////
+
+constexpr TangoConfig GetConfig( TangoConfig cfg )
+{
+    return cfg;
+}
+
+
+inline TangoConfig GetConfig( UniqueConfig &cfg )
+{
+    return cfg.get();
+}
+
 
 namespace detail
 {
