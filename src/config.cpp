@@ -116,37 +116,37 @@ template<> std::string Config_get< std::string, TangoConfig >( TangoConfig &&con
 }
 
 
-template<> void Config_set< bool >( TangoConfig config, const char *name, const bool &value )
+template<> void Config_set< bool, TangoConfig >( TangoConfig &&config, const char *name, const bool &value )
 {
     ThrowIfSetError( TangoConfig_setBool( config, name, value ), name );
 }
 
 
-template<> void Config_set< int32_t >( TangoConfig config, const char *name, const int32_t &value )
+template<> void Config_set< int32_t, TangoConfig >( TangoConfig &&config, const char *name, const int32_t &value )
 {
     ThrowIfSetError( TangoConfig_setInt32( config, name, value ), name );
 }
 
 
-template<> void Config_set< int64_t >( TangoConfig config, const char *name, const int64_t &value )
+template<> void Config_set< int64_t, TangoConfig >( TangoConfig &&config, const char *name, const int64_t &value )
 {
     ThrowIfSetError( TangoConfig_setInt64( config, name, value ), name );
 }
 
 
-template<> void Config_set< double >( TangoConfig config, const char *name, const double &value )
+template<> void Config_set< double, TangoConfig >( TangoConfig &&config, const char *name, const double &value )
 {
     ThrowIfSetError( TangoConfig_setDouble( config, name, value ), name );
 }
 
 
-template<> void Config_set< const char * >( TangoConfig config, const char *name, const char * const &value )
+template<> void Config_set< const char *, TangoConfig >( TangoConfig &&config, const char *name, const char * const &value )
 {
     ThrowIfSetError( TangoConfig_setString( config, name, value ), name );
 }
 
 
-template<> void Config_set< std::string >( TangoConfig config, const char *name, const std::string &value )
+template<> void Config_set< std::string, TangoConfig >( TangoConfig &&config, const char *name, const std::string &value )
 {
     ThrowIfSetError( TangoConfig_setString( config, name, value.c_str() ), name );
 }

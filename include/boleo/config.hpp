@@ -26,7 +26,7 @@
             WrapConfig( TangoService_getConfig( TANGO_CONFIG_RUNTIME ) );
 
         int depth_mode = Config_get< config_depth_mode >( config );
-        Config_set< config_enable_color_camera >( config.get(), false );
+        Config_set< config_enable_color_camera >( config, false );
 
     @endcode
 
@@ -185,13 +185,17 @@ T Config_get(
         @throws TangoError in case of errors.
     */
 template<
-    typename T
+    typename T,
+    typename CfgPtrType //!< Type of config pointer.
 >
 void Config_set(
-    TangoConfig config, //!< The config object to write.
+    CfgPtrType &&config,//!< The config object to write.
     const char *name,   //!< Name of the entry to write.
     const T &value      //!< The value to write.
-);
+)
+{
+    Config_set< T, TangoConfig >( GetConfig( config ), name, value );
+}
 
 
     //! Reads the value of a configuration entry, specified at compile time.
@@ -220,10 +224,11 @@ typename detail::ConfigEntryTraits< e >::value_type Config_get(
         @throws TangoError in case of errors.
     */
 template<
-    ConfigEntry e
+    ConfigEntry e,      //!< Which config entry to access.
+    typename CfgPtrType //!< Type of config pointer.
 >
 void Config_set(
-    TangoConfig config, //!< The config object to write.
+    CfgPtrType &&config,//!< The config object to write.
     const typename detail::ConfigEntryTraits< e >::value_type &value //!< Value.
 )
 {
@@ -232,7 +237,7 @@ void Config_set(
 
     static_assert( traits_type::is_writable, "Entry must be writable" );
 
-    Config_set< value_type >( config, traits_type::name, value );
+    Config_set< value_type, CfgPtrType >( config, traits_type::name, value );
 }
 
 
@@ -249,12 +254,12 @@ template<> int64_t      Config_get< int64_t,     TangoConfig >( TangoConfig &&, 
 template<> double       Config_get< double,      TangoConfig >( TangoConfig &&, const char * );
 template<> std::string  Config_get< std::string, TangoConfig >( TangoConfig &&, const char * );
 
-template<> void Config_set< bool        >( TangoConfig, const char *, const bool & );
-template<> void Config_set< int32_t     >( TangoConfig, const char *, const int32_t & );
-template<> void Config_set< int64_t     >( TangoConfig, const char *, const int64_t & );
-template<> void Config_set< double      >( TangoConfig, const char *, const double & );
-template<> void Config_set< const char *>( TangoConfig, const char *, const char * const & );
-template<> void Config_set< std::string >( TangoConfig, const char *, const std::string & );
+template<> void Config_set< bool,         TangoConfig >( TangoConfig &&, const char *, const bool & );
+template<> void Config_set< int32_t,      TangoConfig >( TangoConfig &&, const char *, const int32_t & );
+template<> void Config_set< int64_t,      TangoConfig >( TangoConfig &&, const char *, const int64_t & );
+template<> void Config_set< double,       TangoConfig >( TangoConfig &&, const char *, const double & );
+template<> void Config_set< const char *, TangoConfig >( TangoConfig &&, const char *, const char * const & );
+template<> void Config_set< std::string,  TangoConfig >( TangoConfig &&, const char *, const std::string & );
 
 
 
