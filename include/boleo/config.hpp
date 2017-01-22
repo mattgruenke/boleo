@@ -215,7 +215,7 @@ typename detail::ConfigEntryTraits< e >::value_type Config_get(
 
     static_assert( traits_type::is_readable, "Entry must be readable" );
 
-    return Config_get< return_type, CfgPtrType >( config, traits_type::name );
+    return Config_get< return_type, TangoConfig >( GetConfig( config ), traits_type::name );
 }
 
 
@@ -237,7 +237,7 @@ void Config_set(
 
     static_assert( traits_type::is_writable, "Entry must be writable" );
 
-    Config_set< value_type, CfgPtrType >( config, traits_type::name, value );
+    Config_set< value_type, TangoConfig >( GetConfig( config ), traits_type::name, value );
 }
 
 
