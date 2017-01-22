@@ -25,7 +25,7 @@
         UniqueConfig config =
             WrapConfig( TangoService_getConfig( TANGO_CONFIG_RUNTIME ) );
 
-        int depth_mode = Config_get< config_depth_mode >( config.get() );
+        int depth_mode = Config_get< config_depth_mode >( config );
         Config_set< config_enable_color_camera >( config.get(), false );
 
     @endcode
@@ -152,9 +152,15 @@ namespace detail
         This can't throw TangoError, since TangoConfig_toString() returns no
         error code.
     */
+template<
+    typename CfgPtrType //!< Type of config pointer.
+>
 std::string Config_toString(
-    TangoConfig config  //!< The config object to read.
-);
+    CfgPtrType config   //!< The config object to read.
+)
+{
+    return Config_toString< TangoConfig >( GetConfig( config ) );
+}
 
 
     //! Reads the value of a configuration entry, given the type.
@@ -162,12 +168,16 @@ std::string Config_toString(
         @throws TangoError in case of errors.
     */
 template<
-    typename T
+    typename T,         //!< Entry type.
+    typename CfgPtrType //!< Type of config pointer.
 >
 T Config_get(
-    TangoConfig config, //!< The config object to read.
+    CfgPtrType &&config,//!< The config object to read.
     const char *name    //!< Name of the entry to read.
-);
+)
+{
+    return Config_get< T, TangoConfig >( GetConfig( config ), name );
+}
 
 
     //! Writes the value of a configuration entry of given type.
@@ -189,10 +199,11 @@ void Config_set(
         @throws TangoError in case of errors.
     */
 template<
-    ConfigEntry e
+    ConfigEntry e,      //!< Which config entry to access.
+    typename CfgPtrType //!< Type of config pointer.
 >
 typename detail::ConfigEntryTraits< e >::value_type Config_get(
-    TangoConfig config  //!< The config object to read.
+    CfgPtrType &&config //!< The config object to read.
 )
 {
     typedef detail::ConfigEntryTraits< e > traits_type;
@@ -200,7 +211,7 @@ typename detail::ConfigEntryTraits< e >::value_type Config_get(
 
     static_assert( traits_type::is_readable, "Entry must be readable" );
 
-    return Config_get< return_type >( config, traits_type::name );
+    return Config_get< return_type, CfgPtrType >( config, traits_type::name );
 }
 
 
@@ -230,11 +241,13 @@ void Config_set(
 // Specializations
 ////////////////////////////////////////////////////////////
 
-template<> bool         Config_get< bool        >( TangoConfig, const char * );
-template<> int32_t      Config_get< int32_t     >( TangoConfig, const char * );
-template<> int64_t      Config_get< int64_t     >( TangoConfig, const char * );
-template<> double       Config_get< double      >( TangoConfig, const char * );
-template<> std::string  Config_get< std::string >( TangoConfig, const char * );
+template<> std::string Config_toString< TangoConfig >( TangoConfig );
+
+template<> bool         Config_get< bool,        TangoConfig >( TangoConfig &&, const char * );
+template<> int32_t      Config_get< int32_t,     TangoConfig >( TangoConfig &&, const char * );
+template<> int64_t      Config_get< int64_t,     TangoConfig >( TangoConfig &&, const char * );
+template<> double       Config_get< double,      TangoConfig >( TangoConfig &&, const char * );
+template<> std::string  Config_get< std::string, TangoConfig >( TangoConfig &&, const char * );
 
 template<> void Config_set< bool        >( TangoConfig, const char *, const bool & );
 template<> void Config_set< int32_t     >( TangoConfig, const char *, const int32_t & );

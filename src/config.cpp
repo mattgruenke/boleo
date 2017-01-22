@@ -61,7 +61,7 @@ static void ThrowIfSetError( TangoErrorType ev, const char *name )
 }
 
 
-std::string Config_toString( TangoConfig config )
+template<> std::string Config_toString< TangoConfig >( TangoConfig config )
 {
     char *str = TangoConfig_toString( config );
     if (!str) throw std::runtime_error( "Config_toString() failed" );
@@ -73,7 +73,7 @@ std::string Config_toString( TangoConfig config )
 }
 
 
-template<> bool Config_get< bool >( TangoConfig config, const char *name )
+template<> bool Config_get< bool, TangoConfig >( TangoConfig &&config, const char *name )
 {
     bool value = false;
     ThrowIfGetError( TangoConfig_getBool( config, name, &value ), name );
@@ -81,7 +81,7 @@ template<> bool Config_get< bool >( TangoConfig config, const char *name )
 }
 
 
-template<> int32_t Config_get< int32_t >( TangoConfig config, const char *name )
+template<> int32_t Config_get< int32_t, TangoConfig >( TangoConfig &&config, const char *name )
 {
     int32_t value = 0;
     ThrowIfGetError( TangoConfig_getInt32( config, name, &value ), name );
@@ -89,7 +89,7 @@ template<> int32_t Config_get< int32_t >( TangoConfig config, const char *name )
 }
 
 
-template<> int64_t Config_get< int64_t >( TangoConfig config, const char *name )
+template<> int64_t Config_get< int64_t, TangoConfig >( TangoConfig &&config, const char *name )
 {
     int64_t value = 0;
     ThrowIfGetError( TangoConfig_getInt64( config, name, &value ), name );
@@ -97,7 +97,7 @@ template<> int64_t Config_get< int64_t >( TangoConfig config, const char *name )
 }
 
 
-template<> double Config_get< double >( TangoConfig config, const char *name )
+template<> double Config_get< double, TangoConfig >( TangoConfig &&config, const char *name )
 {
     double value = 0.0;
     ThrowIfGetError( TangoConfig_getDouble( config, name, &value ), name );
@@ -105,7 +105,7 @@ template<> double Config_get< double >( TangoConfig config, const char *name )
 }
 
 
-template<> std::string Config_get< std::string >( TangoConfig config, const char *name )
+template<> std::string Config_get< std::string, TangoConfig >( TangoConfig &&config, const char *name )
 {
         // It's unfortunate the API provides no better option...
     constexpr size_t MaxStringSize = 4000;
