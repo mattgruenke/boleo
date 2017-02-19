@@ -69,8 +69,8 @@ jint SafeCall(
     catch (TangoException &e)
     {
         std::string message = "Unhandled Tango exception: ";
-        std::error_code &ec = e.code();
-        int ev = e.code().value();
+        const std::error_code &ec = e.code();
+        int ev = ec.value();
         std::string tango_msg = ec.category().message( ev );
         if (tango_msg != e.what())
         {
