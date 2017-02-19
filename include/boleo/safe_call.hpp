@@ -27,6 +27,7 @@
 
 
 #include "boleo/exceptions.hpp"
+#include "boleo/detail/features.hpp"
 
 #include <string>
 #include <typeinfo>
@@ -84,9 +85,11 @@ jint SafeCall(
     {
         std::string message = "Unhandled exception: ";
         message += e.what();
+#if BOLEO_HAS_RTTI
         message += " (";
         message += typeid( e ).name();
         message += ")";
+#endif
         log_fn( message.c_str() );
     }
     catch (...)
