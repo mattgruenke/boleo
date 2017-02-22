@@ -17,16 +17,13 @@ set( sources
     exceptions.cpp
 )
 
-set( headers
-    ${h_dir}/config.hpp
-    ${h_dir}/exceptions.hpp
-    ${h_dir}/pcl.hpp
-    ${h_dir}/safe_call.hpp
-)
+file( GLOB headers
+    LIST_DIRECTORIES false
+    ${h_dir}/* )
 
-set( details
-    ${h_dir}/detail/common.hpp
-)
+file( GLOB details
+    LIST_DIRECTORIES false
+    ${h_dir}/detail/* )
 
 add_library( boleo ${sources} )
 
