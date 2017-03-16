@@ -18,6 +18,8 @@
 
 #include "boleo/exceptions.hpp"
 
+#include <string>
+
 
     //! Namespace for Boleo.
 namespace boleo {
